@@ -1,4 +1,4 @@
-package proyecto_ingenieria;
+package vista;
 
 public class Main {
     public static void main(String[] args) {
