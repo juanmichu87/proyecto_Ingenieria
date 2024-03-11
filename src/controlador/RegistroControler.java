@@ -36,7 +36,7 @@ public class RegistroControler {
 		try (BufferedReader br = new BufferedReader(new FileReader(USUARIOS_JSON_FILE))) {
 			Gson gson = new Gson();
 			Usuario[] usuariosArray = gson.fromJson(br, Usuario[].class);
-			return usuariosArray != null ? List.of(usuariosArray) : new ArrayList<>();
+			return usuariosArray != null ? new ArrayList<>(List.of(usuariosArray)) : new ArrayList<>();
 		} catch (IOException e) {
 			return new ArrayList<>();
 		}
