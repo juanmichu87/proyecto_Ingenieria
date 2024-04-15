@@ -12,5 +12,12 @@
     "email": "aewg",
     "password": "weg",
     "tipo": "ewg"
+  },
+  {
+    "id": 0,
+    "nombre": "e",
+    "email": "e",
+    "password": "e",
+    "tipo": "e"
   }
 ]
