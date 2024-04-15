@@ -1,9 +1,24 @@
 [
   {
+<<<<<<< Updated upstream
     "id": 0,
     "nombre": "Ivan",
     "email": "ivan@gmail.com",
     "password": "123456",
     "tipo": "usuario"
+=======
+    "id": 1,
+    "nombre": "a",
+    "email": "a",
+    "password": "a",
+    "tipo": "a"
+  },
+  {
+    "id": 2,
+    "nombre": "r",
+    "email": "r",
+    "password": "r",
+    "tipo": "r"
+>>>>>>> Stashed changes
   }
 ]

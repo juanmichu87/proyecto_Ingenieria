@@ -17,7 +17,12 @@ import entidades.Usuario;
 
 public class RegistroControler {
 
+<<<<<<< Updated upstream
     private static final String USUARIOS_JSON_FILE = "Data/usuarios.json";
+=======
+    private static final String USUARIOS_JSON_FILE = "usuarios.json";
+    private int nextId = 1;  // Inicia el ID desde 1
+>>>>>>> Stashed changes
     private List<Usuario> usuarios;
 
     public RegistroControler() {
@@ -26,6 +31,7 @@ public class RegistroControler {
 
     public void registrarUsuario(Usuario usuario) {
         if (!existeNombreUsuario(usuario.getNombre()) && !existeCorreoElectronico(usuario.getEmail())) {
+            usuario.setId(nextId++);  // Asigna el ID actual y incrementa nextId
             usuarios.add(usuario);
             guardarUsuariosEnJson(usuarios);
             System.out.println("Usuario registrado con éxito.");
@@ -42,11 +48,19 @@ public class RegistroControler {
         try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
             Gson gson = new Gson();
             Usuario[] arrayUsuarios = gson.fromJson(br, Usuario[].class);
+            List<Usuario> usuarios;
             if (arrayUsuarios != null) {
-                return new ArrayList<>(Arrays.asList(arrayUsuarios));
+                usuarios = new ArrayList<>(Arrays.asList(arrayUsuarios));
             } else {
-                return new ArrayList<>();
+                usuarios = new ArrayList<>();
             }
+            // Actualiza el nextId basándose en el ID más alto
+            usuarios.forEach(usuario -> {
+                if (usuario.getId() >= nextId) {
+                    nextId = usuario.getId() + 1;
+                }
+            });
+            return usuarios;
         } catch (IOException e) {
             System.err.println("Error al leer el archivo: " + e.getMessage());
             return new ArrayList<>();
