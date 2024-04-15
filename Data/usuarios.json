@@ -1,30 +1,9 @@
 [
   {
-    "id": 0,
-    "nombre": "Manolo",
-    "email": "manolo@gmail.com",
-    "password": "m",
-    "tipo": "Administrador"
-  },
-  {
-    "id": 0,
-    "nombre": "fewg",
-    "email": "aewg",
-    "password": "weg",
-    "tipo": "ewg"
-  },
-  {
-    "id": 0,
-    "nombre": "e",
-    "email": "e",
-    "password": "e",
-    "tipo": "e"
-  },
-  {
-    "id": 0,
-    "nombre": "Ivan",
-    "email": "a",
-    "password": "03",
-    "tipo": "usuario"
+    "id": 1,
+    "nombre": "a",
+    "email": "acsenvwj",
+    "password": "a",
+    "tipo": "USUARIO BASICO"
   }
 ]
