@@ -17,7 +17,7 @@ import entidades.Usuario;
 
 public class RegistroControler {
 
-    private static final String USUARIOS_JSON_FILE = "usuarios.json";
+    private static final String USUARIOS_JSON_FILE = "Data/usuarios.json";
     private List<Usuario> usuarios;
 
     public RegistroControler() {
