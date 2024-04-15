@@ -17,12 +17,9 @@ import entidades.Usuario;
 
 public class RegistroControler {
 
-<<<<<<< Updated upstream
     private static final String USUARIOS_JSON_FILE = "Data/usuarios.json";
-=======
-    private static final String USUARIOS_JSON_FILE = "usuarios.json";
     private int nextId = 1;  // Inicia el ID desde 1
->>>>>>> Stashed changes
+
     private List<Usuario> usuarios;
 
     public RegistroControler() {
