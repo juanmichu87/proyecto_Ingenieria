@@ -5,5 +5,12 @@
     "email": "acsenvwj",
     "password": "a",
     "tipo": "USUARIO BASICO"
+  },
+  {
+    "id": 2,
+    "nombre": "Juan",
+    "email": "juan@gmail.com",
+    "password": "Juan@2002",
+    "tipo": "USUARIO BASICO"
   }
 ]

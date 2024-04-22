@@ -26,17 +26,18 @@ public class RegistroControler {
         this.usuarios = cargarUsuariosDesdeJson();
     }
 
-    public void registrarUsuario(Usuario usuario) {
+    public boolean registrarUsuario(Usuario usuario) {
         if (!existeNombreUsuario(usuario.getNombre()) && !existeCorreoElectronico(usuario.getEmail())) {
             usuario.setId(nextId++);  // Asigna el ID actual y incrementa nextId
             usuarios.add(usuario);
             guardarUsuariosEnJson(usuarios);
-            System.out.println("Usuario registrado con éxito.");
+            return true; // Registro exitoso, devolver true
         } else {
-            System.out.println("Error: El nombre de usuario o el correo electrónico ya están en uso.");
+            return false; // Registro fallido, devolver false
         }
     }
-    
+
+
     private List<Usuario> cargarUsuariosDesdeJson() {
         File archivo = new File(USUARIOS_JSON_FILE);
         if (!archivo.exists()) {
