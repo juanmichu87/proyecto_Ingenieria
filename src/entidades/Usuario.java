@@ -1,7 +1,7 @@
 package entidades;
 
 public class Usuario {
-	
+//hola
 private int id;
 private String nombre;
 private String email;
