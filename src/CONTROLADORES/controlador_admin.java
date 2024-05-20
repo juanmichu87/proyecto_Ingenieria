@@ -463,7 +463,7 @@ public class controlador_admin {
 	 * Exporta los datos de los usuarios a un archivo CSV.
 	 */
 	public void exportarUsuariosACSV() {
-		try (FileWriter writer = new FileWriter("usuarios.csv")) {
+		try (FileWriter writer = new FileWriter("Exportaciones/usuarios.csv")) {
 			// Escribir encabezados
 			writer.append("ID,Nombre,Email,Contraseña,Tipo\n");
 

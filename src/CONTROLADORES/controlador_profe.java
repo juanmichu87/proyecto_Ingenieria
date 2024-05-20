@@ -476,7 +476,7 @@ public class controlador_profe {
 	 * Exporta los datos de las salas a un archivo CSV.
 	 */
 	public void exportarSalasACSV() {
-		try (FileWriter writer = new FileWriter("salas.csv")) {
+		try (FileWriter writer = new FileWriter("Exportaciones/salas.csv")) {
 			// Escribir encabezados
 			writer.append("ID,Reservada,ID Profesor Asociado,Turno,Historial\n");
 
