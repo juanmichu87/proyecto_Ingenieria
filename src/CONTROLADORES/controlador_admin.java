@@ -65,61 +65,64 @@ public class controlador_admin {
 	 * Permite al administrador gestionar los usuarios.
 	 */
 	public void gestionarUsuarios() {
-	    Scanner scanner = new Scanner(System.in); // Crea un objeto Scanner para leer la entrada del usuario.
-	    menu = new Menu(); // Inicializa el menú.
+		Scanner scanner = new Scanner(System.in); // Crea un objeto Scanner para leer la entrada del usuario.
+		menu = new Menu(); // Inicializa el menú.
 
-	    while (true) {
-	        // Mostrar lista de usuarios
-	        System.out.println("--- LISTA DE USUARIOS ---");
-	        for (int i = 0; i < usuarios.size(); i++) { // Itera sobre la lista de usuarios.
-	            JsonObject usuario = usuarios.get(i).getAsJsonObject(); // Obtiene el objeto JSON del usuario actual.
-	            System.out.println((i + 1) + ". " + usuario.get("nombre").getAsString() + " (" + usuario.get("tipo").getAsString() + ")");
-	        }
+		while (true) {
+			// Mostrar lista de usuarios
+			System.out.println("--- LISTA DE USUARIOS ---");
+			for (int i = 0; i < usuarios.size(); i++) { // Itera sobre la lista de usuarios.
+				JsonObject usuario = usuarios.get(i).getAsJsonObject(); // Obtiene el objeto JSON del usuario actual.
+				System.out.println((i + 1) + ". " + usuario.get("nombre").getAsString() + " ("
+						+ usuario.get("tipo").getAsString() + ")");
+			}
 
-	        // Solicitar al administrador que elija un usuario para gestionar
-	        System.out.print("Seleccione el número del usuario que desea gestionar (0 para volver al menú principal): ");
-	        int opcionUsuario = scanner.nextInt(); // Lee la opción seleccionada por el usuario.
-	        
-	        if (opcionUsuario == 0) {
-	            return; // Volver al menú principal si se selecciona 0.
-	        } else if (opcionUsuario < 1 || opcionUsuario > usuarios.size()) {
-	            System.out.println("Número de usuario no válido. Por favor, seleccione un número válido.");
-	            continue; // Volver a mostrar el menú de gestión de usuarios.
-	        }
+			// Solicitar al administrador que elija un usuario para gestionar
+			System.out
+					.print("Seleccione el número del usuario que desea gestionar (0 para volver al menú principal): ");
+			int opcionUsuario = scanner.nextInt(); // Lee la opción seleccionada por el usuario.
 
-	        // Obtener el usuario seleccionado
-	        JsonObject usuarioSeleccionado = usuarios.get(opcionUsuario - 1).getAsJsonObject(); // Obtiene el usuario seleccionado.
-	        System.out.println("--- GESTIÓN DE USUARIO ---");
-	        System.out.println("Usuario seleccionado: " + usuarioSeleccionado.get("nombre").getAsString());
+			if (opcionUsuario == 0) {
+				return; // Volver al menú principal si se selecciona 0.
+			} else if (opcionUsuario < 1 || opcionUsuario > usuarios.size()) {
+				System.out.println("Número de usuario no válido. Por favor, seleccione un número válido.");
+				continue; // Volver a mostrar el menú de gestión de usuarios.
+			}
 
-	        // Mostrar opciones de gestión para el usuario seleccionado
-	        System.out.println("1. Modificar");
-	        System.out.println("2. Eliminar");
-	        System.out.println("3. Cambiar Rol");
-	        System.out.println("4. Salir");
+			// Obtener el usuario seleccionado
+			JsonObject usuarioSeleccionado = usuarios.get(opcionUsuario - 1).getAsJsonObject(); // Obtiene el usuario
+																								// seleccionado.
+			System.out.println("--- GESTIÓN DE USUARIO ---");
+			System.out.println("Usuario seleccionado: " + usuarioSeleccionado.get("nombre").getAsString());
 
-	        // Solicitar al administrador que elija una acción
-	        System.out.print("Seleccione la acción que desea realizar: ");
-	        int opcionAccion = scanner.nextInt(); // Lee la acción seleccionada por el usuario.
-	        switch (opcionAccion) {
-	            case 1:
-	                modificarUsuario(usuarioSeleccionado); // Llama al método para modificar el usuario.
-	                break;
-	            case 2:
-	                eliminarUsuario(usuarioSeleccionado); // Llama al método para eliminar el usuario.
-	                break;
-	            case 3:
-	                cambiarRol(usuarioSeleccionado); // Llama al método para cambiar el rol del usuario.
-	                break;
-	            case 4:
-	                return; // Salir del menú de gestión de usuarios.
-	            default:
-	                System.out.println("Opción no válida. Por favor, seleccione una opción válida.");
-	                break;
-	        }
-	    }
+			// Mostrar opciones de gestión para el usuario seleccionado
+			System.out.println("1. Modificar");
+			System.out.println("2. Eliminar");
+			System.out.println("3. Cambiar Rol");
+			System.out.println("4. Salir");
+
+			// Solicitar al administrador que elija una acción
+			System.out.print("Seleccione la acción que desea realizar: ");
+			int opcionAccion = scanner.nextInt(); // Lee la acción seleccionada por el usuario.
+			switch (opcionAccion) {
+			case 1:
+				modificarUsuario(usuarioSeleccionado); // Llama al método para modificar el usuario.
+				break;
+			case 2:
+				eliminarUsuario(usuarioSeleccionado); // Llama al método para eliminar el usuario.
+				break;
+			case 3:
+				cambiarRol(usuarioSeleccionado); // Llama al método para cambiar el rol del usuario.
+				break;
+
+			case 4:
+				return; // Salir del menú de gestión de usuarios.
+			default:
+				System.out.println("Opción no válida. Por favor, seleccione una opción válida.");
+				break;
+			}
+		}
 	}
-
 
 	/**
 	 * Modifica los datos de un usuario.
@@ -396,7 +399,7 @@ public class controlador_admin {
 	 */
 	public void guardarUsuarios() {
 		try {
-			FileWriter writer = new FileWriter("Data/usuarios.json"); // Crea un escritor de archivos para usuarios.json.
+			FileWriter writer = new FileWriter("usuarios.json"); // Crea un escritor de archivos para usuarios.json.
 			writer.write(new Gson().toJson(usuarios)); // Escribe los datos de los usuarios en formato JSON.
 			writer.close(); // Cierra el escritor de archivos.
 		} catch (IOException e) {
@@ -409,7 +412,7 @@ public class controlador_admin {
 	 */
 	public void guardarSalas() {
 		try {
-			FileWriter writer = new FileWriter("Data/salas.json"); // Crea un escritor de archivos para salas.json.
+			FileWriter writer = new FileWriter("salas.json"); // Crea un escritor de archivos para salas.json.
 			writer.write(new Gson().toJson(salas)); // Escribe los datos de las salas en formato JSON.
 			writer.close(); // Cierra el escritor de archivos.
 		} catch (IOException e) {
@@ -451,6 +454,33 @@ public class controlador_admin {
 				}
 			}
 			System.out.println(); // Línea en blanco entre salas
+		}
+	}
+
+//////////////////////////////EXPORTAR DATOS A CSV////////////////////////	
+	
+	/**
+	 * Exporta los datos de los usuarios a un archivo CSV.
+	 */
+	public void exportarUsuariosACSV() {
+		try (FileWriter writer = new FileWriter("usuarios.csv")) {
+			// Escribir encabezados
+			writer.append("ID,Nombre,Email,Contraseña,Tipo\n");
+
+			// Escribir datos de usuarios
+			for (JsonElement element : usuarios) {
+				JsonObject usuario = element.getAsJsonObject();
+				writer.append(usuario.get("id").getAsString()).append(",");
+				writer.append(usuario.get("nombre").getAsString()).append(",");
+				writer.append(usuario.get("email").getAsString()).append(",");
+				writer.append(usuario.get("password").getAsString()).append(",");
+				writer.append(usuario.get("tipo").getAsString()).append("\n");
+			}
+
+			System.out.println("Datos de usuarios exportados exitosamente a usuarios.csv");
+		} catch (IOException e) {
+			System.out.println("Error al exportar datos de usuarios a CSV");
+			e.printStackTrace();
 		}
 	}
 }

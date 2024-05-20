@@ -281,23 +281,17 @@ public class controlador_usu {
 	 * Muestra el historial de asistencia del usuario logueado.
 	 */
 	public void verHistorialAsistencia() {
-	    Usuario usuario = obtenerUsuario(); // Obtiene el usuario logueado.
+		Usuario usuario = obtenerUsuario(); // Obtiene el usuario logueado.
 
-	    int[] historialAsistencia = usuario.obtenerHistorialAsistencia(); // Obtiene el historial de asistencia del usuario.
+		int[] historialAsistencia = usuario.obtenerHistorialAsistencia(); // Obtiene el historial de asistencia del
+																			// usuario.
 
-	    // Verifica si el historial de asistencia es nulo
-	    if (historialAsistencia == null) {
-	        System.out.println("El historial de asistencia del usuario es nulo.");
-	        return; // Sale del método en caso de historial nulo
-	    }
-
-	    // Imprime el historial de asistencia
-	    System.out.println("Historial de Asistencia:");
-	    for (int asistencia : historialAsistencia) {
-	        System.out.println(asistencia);
-	    }
+		// Imprime el historial de asistencia
+		System.out.println("Historial de Asistencia:");
+		for (int asistencia : historialAsistencia) {
+			System.out.println(asistencia);
+		}
 	}
-
 
 	////////////////////////////// FIN ACCIONES
 	////////////////////////////// USUARIO//////////////////////////////////
@@ -327,7 +321,7 @@ public class controlador_usu {
 	 */
 	public void guardarUsuarios() {
 		try {
-			FileWriter writer = new FileWriter("Data/usuarios.json"); // Crea un escritor de archivos para usuarios.json.
+			FileWriter writer = new FileWriter("usuarios.json"); // Crea un escritor de archivos para usuarios.json.
 			writer.write(new Gson().toJson(usuarios)); // Escribe los datos de los usuarios en formato JSON.
 			writer.close(); // Cierra el escritor de archivos.
 		} catch (IOException e) {
@@ -349,7 +343,7 @@ public class controlador_usu {
 	 */
 	public void guardarSalas() {
 		try {
-			FileWriter writer = new FileWriter("Data/salas.json"); // Crea un escritor de archivos para salas.json.
+			FileWriter writer = new FileWriter("salas.json"); // Crea un escritor de archivos para salas.json.
 			writer.write(new Gson().toJson(salas)); // Escribe los datos de las salas en formato JSON.
 			writer.close(); // Cierra el escritor de archivos.
 		} catch (IOException e) {
@@ -357,4 +351,27 @@ public class controlador_usu {
 			e.printStackTrace(); // Imprime la traza de la excepción en caso de error.
 		}
 	}
+	
+	/**
+	 * Muestra las salas en las que el usuario está inscrito.
+	 */
+	public void verSalasInscrito() {
+	    System.out.println("--- Salas en las que estás inscrito ---");
+	    boolean inscritoEnAlgunaSala = false; // Variable para verificar si el usuario está inscrito en alguna sala.
+	    for (JsonElement element : salas) { // Itera sobre la lista de salas.
+	        JsonObject sala = element.getAsJsonObject(); // Obtiene el objeto JSON de la sala actual.
+	        JsonArray usuariosEnSala = sala.getAsJsonArray("usuariosEnSala"); // Obtiene la lista de usuarios en la sala.
+	        for (JsonElement usuarioEnSala : usuariosEnSala) { // Itera sobre la lista de usuarios en la sala.
+	            if (usuarioEnSala.getAsInt() == idUsuarioLogueado) { // Verifica si el usuario logueado está en la sala.
+	                inscritoEnAlgunaSala = true; // Marca que el usuario está inscrito en una sala.
+	                System.out.println("- ID Sala: " + sala.get("id").getAsInt()); // Muestra el ID de la sala.
+	                break; // Sale del bucle interno una vez que encuentra el ID del usuario.
+	            }
+	        }
+	    }
+	    if (!inscritoEnAlgunaSala) {
+	        System.out.println("No estás inscrito en ninguna sala.");
+	    }
+	}
+
 }

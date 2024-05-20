@@ -260,7 +260,7 @@ public class controlador_profe {
 	 */
 	public void guardarSalasProfe() {
 		try {
-			FileWriter writer = new FileWriter("Data/salas.json"); // Crea un escritor de archivos para salas.json.
+			FileWriter writer = new FileWriter("salas.json"); // Crea un escritor de archivos para salas.json.
 			writer.write(new Gson().toJson(salas)); // Escribe los datos de las salas en formato JSON.
 			writer.close(); // Cierra el escritor de archivos.
 		} catch (IOException e) {
@@ -441,7 +441,7 @@ public class controlador_profe {
 	 */
 	public void guardarUsuarios() {
 		try {
-			FileWriter writer = new FileWriter("Data/usuarios.json"); // Crea un escritor de archivos para usuarios.json.
+			FileWriter writer = new FileWriter("usuarios.json"); // Crea un escritor de archivos para usuarios.json.
 			writer.write(new Gson().toJson(usuarios)); // Escribe los datos de los usuarios en formato JSON.
 			writer.close(); // Cierra el escritor de archivos.
 		} catch (IOException e) {
@@ -463,7 +463,7 @@ public class controlador_profe {
 	 */
 	public void guardarSalas() {
 		try {
-			FileWriter writer = new FileWriter("Data/salas.json"); // Crea un escritor de archivos para salas.json.
+			FileWriter writer = new FileWriter("salas.json"); // Crea un escritor de archivos para salas.json.
 			writer.write(new Gson().toJson(salas)); // Escribe los datos de las salas en formato JSON.
 			writer.close(); // Cierra el escritor de archivos.
 		} catch (IOException e) {
@@ -471,4 +471,47 @@ public class controlador_profe {
 			e.printStackTrace(); // Imprime la traza de la excepción en caso de error.
 		}
 	}
+	
+	/**
+	 * Exporta los datos de las salas a un archivo CSV.
+	 */
+	public void exportarSalasACSV() {
+		try (FileWriter writer = new FileWriter("salas.csv")) {
+			// Escribir encabezados
+			writer.append("ID,Reservada,ID Profesor Asociado,Turno,Historial\n");
+
+			// Escribir datos de salas
+			for (JsonElement element : salas) {
+				JsonObject sala = element.getAsJsonObject();
+				writer.append(sala.get("id").getAsString()).append(",");
+				writer.append(sala.get("reservada").getAsString()).append(",");
+				JsonElement profesorElement = sala.get("idProfesorAsociado");
+				if (profesorElement != null && !profesorElement.isJsonNull()) {
+					writer.append(profesorElement.getAsString());
+				} else {
+					writer.append("N/A");
+				}
+				writer.append(",");
+				writer.append(sala.get("turno").getAsString()).append(",");
+
+				JsonArray historial = sala.getAsJsonArray("historial");
+				if (historial != null && historial.size() > 0) {
+					for (JsonElement evento : historial) {
+						JsonObject eventoSala = evento.getAsJsonObject();
+						writer.append(eventoSala.get("profesorReserva").getAsString()).append(":");
+						writer.append(eventoSala.get("turnoReserva").getAsString()).append(";");
+					}
+					writer.append("\n");
+				} else {
+					writer.append("No hay historial\n");
+				}
+			}
+
+			System.out.println("Datos de salas exportados exitosamente a salas.csv");
+		} catch (IOException e) {
+			System.out.println("Error al exportar datos de salas a CSV");
+			e.printStackTrace();
+		}
+	}
+
 }
