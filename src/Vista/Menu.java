@@ -346,7 +346,9 @@ public class Menu {
             // Si la lista de usuarios no está vacía, obtenemos el último ID y le sumamos uno
             if (usuarios != null && !usuarios.isEmpty()) {
                 siguienteID = usuarios.get(usuarios.size() - 1).getId() + 1;
-            }
+            }else {
+				siguienteID = 1;
+			}
         } catch (IOException e) {
             // Manejo de excepciones si ocurre algún problema al leer el archivo
             e.printStackTrace();
