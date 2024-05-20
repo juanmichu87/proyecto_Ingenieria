@@ -149,6 +149,14 @@
         "email": "pepe@uem.com",
         "password": "Pepe123",
         "tipo": "USUARIO",
+        "historialAsistencia": [4]
+    },
+    {
+        "id": 20,
+        "nombre": "Sofía",
+        "email": "sofia@uem.com",
+        "password": "Sofia123",
+        "tipo": "USUARIO",
         "historialAsistencia": []
     }
 ]

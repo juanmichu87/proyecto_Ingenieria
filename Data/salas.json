@@ -18,7 +18,7 @@
                 "turnoReserva": "mañana"
             }
         ],
-        "usuariosEnSala": [8, 14]
+        "usuariosEnSala": [8]
     },
     {
         "id": 2,
@@ -35,15 +35,14 @@
     },
     {
         "id": 3,
-        "reservada": true,
+        "reservada": false,
         "turno": "mañana",
         "usuariosEnSala": [],
-        "historial": [],
-        "idProfesorAsociado": 4
+        "historial": []
     },
     {
         "id": 4,
-        "reservada": true,
+        "reservada": false,
         "turno": "tarde",
         "historial": [
             {
@@ -88,10 +87,16 @@
     },
     {
         "id": 8,
-        "reservada": false,
+        "reservada": true,
         "turno": "mañana",
         "usuariosEnSala": [],
-        "historial": []
+        "historial": [
+            {
+                "profesorReserva": 4,
+                "turnoReserva": "mañana"
+            }
+        ],
+        "idProfesorAsociado": 4
     },
     {
         "id": 9,

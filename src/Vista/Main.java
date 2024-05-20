@@ -38,7 +38,7 @@ public class Main {
                                 iniciarSesion = true; // Finaliza el bucle de inicio de sesión si las credenciales son correctas.
                                 // Obtener el ID del usuario actual después de iniciar sesión
                                 int idUsuario = menu.getIdUsuarioLogueado(); // Obtiene el ID del usuario logueado.
-                                System.out.println("Inicio de sesión exitoso. ID de usuario: " + idUsuario);
+                                //System.out.println("Inicio de sesión exitoso. ID de usuario: " + idUsuario);
                             } else {
                                 System.out.println("Credenciales incorrectas. ¿Desea intentarlo de nuevo? (s/n)");
                                 String respuesta = scanner.next(); // Lee la respuesta del usuario.
