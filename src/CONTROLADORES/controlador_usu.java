@@ -281,17 +281,23 @@ public class controlador_usu {
 	 * Muestra el historial de asistencia del usuario logueado.
 	 */
 	public void verHistorialAsistencia() {
-		Usuario usuario = obtenerUsuario(); // Obtiene el usuario logueado.
+	    Usuario usuario = obtenerUsuario(); // Obtiene el usuario logueado.
 
-		int[] historialAsistencia = usuario.obtenerHistorialAsistencia(); // Obtiene el historial de asistencia del
-																			// usuario.
+	    int[] historialAsistencia = usuario.obtenerHistorialAsistencia(); // Obtiene el historial de asistencia del usuario.
 
-		// Imprime el historial de asistencia
-		System.out.println("Historial de Asistencia:");
-		for (int asistencia : historialAsistencia) {
-			System.out.println(asistencia);
-		}
+	    // Verifica si el historial de asistencia es nulo
+	    if (historialAsistencia == null) {
+	        System.out.println("El historial de asistencia del usuario es nulo.");
+	        return; // Sale del método en caso de historial nulo
+	    }
+
+	    // Imprime el historial de asistencia
+	    System.out.println("Historial de Asistencia:");
+	    for (int asistencia : historialAsistencia) {
+	        System.out.println(asistencia);
+	    }
 	}
+
 
 	////////////////////////////// FIN ACCIONES
 	////////////////////////////// USUARIO//////////////////////////////////
@@ -321,7 +327,7 @@ public class controlador_usu {
 	 */
 	public void guardarUsuarios() {
 		try {
-			FileWriter writer = new FileWriter("usuarios.json"); // Crea un escritor de archivos para usuarios.json.
+			FileWriter writer = new FileWriter("Data/usuarios.json"); // Crea un escritor de archivos para usuarios.json.
 			writer.write(new Gson().toJson(usuarios)); // Escribe los datos de los usuarios en formato JSON.
 			writer.close(); // Cierra el escritor de archivos.
 		} catch (IOException e) {
@@ -343,7 +349,7 @@ public class controlador_usu {
 	 */
 	public void guardarSalas() {
 		try {
-			FileWriter writer = new FileWriter("salas.json"); // Crea un escritor de archivos para salas.json.
+			FileWriter writer = new FileWriter("Data/salas.json"); // Crea un escritor de archivos para salas.json.
 			writer.write(new Gson().toJson(salas)); // Escribe los datos de las salas en formato JSON.
 			writer.close(); // Cierra el escritor de archivos.
 		} catch (IOException e) {

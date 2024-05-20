@@ -67,7 +67,7 @@ public class Menu {
 	 */
 	public void guardarUsuarios() {
 		try {
-			FileWriter writer = new FileWriter("usuarios.json"); // Crea un escritor de archivos para usuarios.json.
+			FileWriter writer = new FileWriter("Data/usuarios.json"); // Crea un escritor de archivos para usuarios.json.
 			writer.write(new Gson().toJson(usuarios)); // Escribe los datos de los usuarios en formato JSON.
 			writer.close(); // Cierra el escritor de archivos.
 		} catch (IOException e) {

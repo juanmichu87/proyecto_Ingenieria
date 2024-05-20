@@ -260,7 +260,7 @@ public class controlador_profe {
 	 */
 	public void guardarSalasProfe() {
 		try {
-			FileWriter writer = new FileWriter("salas.json"); // Crea un escritor de archivos para salas.json.
+			FileWriter writer = new FileWriter("Data/salas.json"); // Crea un escritor de archivos para salas.json.
 			writer.write(new Gson().toJson(salas)); // Escribe los datos de las salas en formato JSON.
 			writer.close(); // Cierra el escritor de archivos.
 		} catch (IOException e) {
@@ -441,7 +441,7 @@ public class controlador_profe {
 	 */
 	public void guardarUsuarios() {
 		try {
-			FileWriter writer = new FileWriter("usuarios.json"); // Crea un escritor de archivos para usuarios.json.
+			FileWriter writer = new FileWriter("Data/usuarios.json"); // Crea un escritor de archivos para usuarios.json.
 			writer.write(new Gson().toJson(usuarios)); // Escribe los datos de los usuarios en formato JSON.
 			writer.close(); // Cierra el escritor de archivos.
 		} catch (IOException e) {
@@ -463,7 +463,7 @@ public class controlador_profe {
 	 */
 	public void guardarSalas() {
 		try {
-			FileWriter writer = new FileWriter("salas.json"); // Crea un escritor de archivos para salas.json.
+			FileWriter writer = new FileWriter("Data/salas.json"); // Crea un escritor de archivos para salas.json.
 			writer.write(new Gson().toJson(salas)); // Escribe los datos de las salas en formato JSON.
 			writer.close(); // Cierra el escritor de archivos.
 		} catch (IOException e) {
