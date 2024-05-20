@@ -1,8 +1,11 @@
 package Vista;
 
+import java.io.BufferedReader;
 import java.io.FileReader; // Importa la clase FileReader para leer archivos.
 import java.io.FileWriter; // Importa la clase FileWriter para escribir archivos.
 import java.io.IOException; // Importa la clase IOException para manejar excepciones de entrada/salida.
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner; // Importa la clase Scanner para leer entradas del usuario.
 
@@ -10,10 +13,12 @@ import com.google.gson.Gson; // Importa la clase Gson para manipular JSON.
 import com.google.gson.JsonArray; // Importa la clase JsonArray para trabajar con arreglos JSON.
 import com.google.gson.JsonElement; // Importa la clase JsonElement para trabajar con elementos JSON.
 import com.google.gson.JsonObject; // Importa la clase JsonObject para trabajar con objetos JSON.
+import com.google.gson.reflect.TypeToken;
 
 import CONTROLADORES.controlador_admin; // Importa la clase controlador_admin.
 import CONTROLADORES.controlador_profe; // Importa la clase controlador_profe.
 import CONTROLADORES.controlador_usu; // Importa la clase controlador_usu.
+import entidades.Usuario;
 
 /**
  * Clase Menu para gestionar las interacciones del usuario con el sistema.
@@ -265,7 +270,7 @@ public class Menu {
 		}
 
 		// Genera un nuevo ID para el usuario
-		int nuevoId = usuarios.size() + 1;
+		int nuevoId = obtenerSiguienteID("Data/usuarios.json");
 
 		// Crea el objeto JSON del nuevo usuario
 		JsonObject nuevoUsuario = new JsonObject();
@@ -297,6 +302,8 @@ public class Menu {
 		// aquí)
 		return email.matches("\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b");
 	}
+	
+	
 
 
 	/**
@@ -318,4 +325,33 @@ public class Menu {
 		return tieneMayuscula && tieneNumero; // Devuelve true si la contraseña tiene al menos una mayúscula y un
 												// número.
 	}
+	
+	/**
+	 * Método que se encarga de seleccionar el ID del último usuario y sumarle 1 para generar el id del usuario que se va a registrar. 
+	 * 
+	 * @param archivoJSON ruta del archivo json de usuarios.
+	 * @return ID del último usuario sumándole 1.
+	 */
+	public static int obtenerSiguienteID(String archivoJSON) {
+        int siguienteID = 1; // Valor por defecto si el archivo está vacío o no se puede leer
+
+        try (BufferedReader br = new BufferedReader(new FileReader(archivoJSON))) {
+            // Utilizamos Gson para leer el archivo JSON
+            Gson gson = new Gson();
+            // Definimos el tipo de lista que esperamos recibir del JSON
+            Type listaUsuariosType = new TypeToken<ArrayList<Usuario>>() {}.getType();
+            // Leemos el contenido del archivo JSON en un ArrayList de usuarios
+            ArrayList<Usuario> usuarios = gson.fromJson(br, listaUsuariosType);
+
+            // Si la lista de usuarios no está vacía, obtenemos el último ID y le sumamos uno
+            if (usuarios != null && !usuarios.isEmpty()) {
+                siguienteID = usuarios.get(usuarios.size() - 1).getId() + 1;
+            }
+        } catch (IOException e) {
+            // Manejo de excepciones si ocurre algún problema al leer el archivo
+            e.printStackTrace();
+        }
+
+        return siguienteID;
+    }
 }
