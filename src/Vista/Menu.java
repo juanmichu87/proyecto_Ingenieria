@@ -118,8 +118,6 @@ public class Menu {
 				System.out.println("5. Exportar Datos Usuarios");
 				System.out.println("6. Cerrar Sesión");
 
-
-
 				break;
 			case "PROFESOR":
 				System.out.println("[PROFESOR DE SALA]");
@@ -129,7 +127,6 @@ public class Menu {
 				System.out.println("4. Reservar Sala");
 				System.out.println("5. Exportar Datos Salas");
 				System.out.println("6. Cerrar Sesión");
-
 
 				break;
 			case "USUARIO":
@@ -280,6 +277,11 @@ public class Menu {
 			return;
 		}
 
+		if (emailExiste(email)) { // Verifica si el email ya está registrado.
+			System.out.println("El email ingresado ya está registrado.");
+			return;
+		}
+
 		System.out.print("Password: ");
 		String password = scanner.nextLine(); // Lee la contraseña ingresada por el usuario.
 
@@ -289,7 +291,7 @@ public class Menu {
 		}
 
 		// Genera un nuevo ID para el usuario
-		int nuevoId = usuarios.size() + 1;
+		int nuevoId = obtenerSiguienteID("Data/usuarios.json");
 
 		// Crea el objeto JSON del nuevo usuario
 		JsonObject nuevoUsuario = new JsonObject();
@@ -308,6 +310,22 @@ public class Menu {
 		guardarUsuarios();
 
 		System.out.println("¡Registro exitoso!");
+	}
+
+	/**
+	 * Verifica si un email ya está registrado en el sistema.
+	 *
+	 * @param email El email a verificar.
+	 * @return true si el email ya está registrado, false en caso contrario.
+	 */
+	private boolean emailExiste(String email) {
+		for (JsonElement element : usuarios) { // Itera sobre la lista de usuarios.
+			JsonObject usuario = element.getAsJsonObject(); // Obtiene el objeto JSON del usuario actual.
+			if (usuario.get("email").getAsString().equals(email)) {
+				return true; // Retorna true si se encuentra un usuario con el mismo email.
+			}
+		}
+		return false; // Retorna false si no se encuentra ningún usuario con el mismo email.
 	}
 
 	/**
@@ -341,35 +359,38 @@ public class Menu {
 		return tieneMayuscula && tieneNumero; // Devuelve true si la contraseña tiene al menos una mayúscula y un
 												// número.
 	}
-	
+
 	/**
-	 * Método que se encarga de seleccionar el ID del último usuario y sumarle 1 para generar el id del usuario que se va a registrar. 
+	 * Método que se encarga de seleccionar el ID del último usuario y sumarle 1
+	 * para generar el id del usuario que se va a registrar.
 	 * 
 	 * @param archivoJSON ruta del archivo json de usuarios.
 	 * @return ID del último usuario sumándole 1.
 	 */
 	public static int obtenerSiguienteID(String archivoJSON) {
-        int siguienteID = 1; // Valor por defecto si el archivo está vacío o no se puede leer
+		int siguienteID = 1; // Valor por defecto si el archivo está vacío o no se puede leer
 
-        try (BufferedReader br = new BufferedReader(new FileReader(archivoJSON))) {
-            // Utilizamos Gson para leer el archivo JSON
-            Gson gson = new Gson();
-            // Definimos el tipo de lista que esperamos recibir del JSON
-            Type listaUsuariosType = new TypeToken<ArrayList<Usuario>>() {}.getType();
-            // Leemos el contenido del archivo JSON en un ArrayList de usuarios
-            ArrayList<Usuario> usuarios = gson.fromJson(br, listaUsuariosType);
+		try (BufferedReader br = new BufferedReader(new FileReader(archivoJSON))) {
+			// Utilizamos Gson para leer el archivo JSON
+			Gson gson = new Gson();
+			// Definimos el tipo de lista que esperamos recibir del JSON
+			Type listaUsuariosType = new TypeToken<ArrayList<Usuario>>() {
+			}.getType();
+			// Leemos el contenido del archivo JSON en un ArrayList de usuarios
+			ArrayList<Usuario> usuarios = gson.fromJson(br, listaUsuariosType);
 
-            // Si la lista de usuarios no está vacía, obtenemos el último ID y le sumamos uno
-            if (usuarios != null && !usuarios.isEmpty()) {
-                siguienteID = usuarios.get(usuarios.size() - 1).getId() + 1;
-            }else {
+			// Si la lista de usuarios no está vacía, obtenemos el último ID y le sumamos
+			// uno
+			if (usuarios != null && !usuarios.isEmpty()) {
+				siguienteID = usuarios.get(usuarios.size() - 1).getId() + 1;
+			} else {
 				siguienteID = 1;
 			}
-        } catch (IOException e) {
-            // Manejo de excepciones si ocurre algún problema al leer el archivo
-            e.printStackTrace();
-        }
+		} catch (IOException e) {
+			// Manejo de excepciones si ocurre algún problema al leer el archivo
+			e.printStackTrace();
+		}
 
-        return siguienteID;
-    }
+		return siguienteID;
+	}
 }

@@ -170,6 +170,39 @@ public class controlador_admin {
 				"¿Está seguro de que desea eliminar al usuario " + usuario.get("nombre").getAsString() + "? (s/n)");
 		String respuesta = scanner.nextLine(); // Lee la respuesta del usuario.
 		if (respuesta.equalsIgnoreCase("s")) {
+			int idUsuario = usuario.get("id").getAsInt();
+
+			// Verificar si el usuario es un profesor
+			if (usuario.get("tipo").getAsString().equalsIgnoreCase("PROFESOR")) {
+				// Iterar sobre las salas y eliminar la asociación con el profesor
+				for (JsonElement element : salas) {
+					JsonObject sala = element.getAsJsonObject();
+					if (sala.has("idProfesorAsociado") && sala.get("idProfesorAsociado").getAsInt() == idUsuario) {
+						sala.remove("idProfesorAsociado");
+						sala.addProperty("reservada", false);
+					}
+				}
+			}
+
+			// Iterar sobre las salas y eliminar al usuario de la lista de usuarios en sala
+			for (JsonElement element : salas) {
+				JsonObject sala = element.getAsJsonObject();
+				if (sala.has("usuariosEnSala")) {
+					JsonArray usuariosEnSala = sala.getAsJsonArray("usuariosEnSala");
+					JsonArray usuariosActualizados = new JsonArray();
+
+					for (JsonElement usuarioEnSala : usuariosEnSala) {
+						if (usuarioEnSala.getAsInt() != idUsuario) {
+							usuariosActualizados.add(usuarioEnSala);
+						}
+					}
+
+					sala.add("usuariosEnSala", usuariosActualizados);
+				}
+			}
+
+			guardarSalas(); // Guardar los cambios en las salas
+
 			// Eliminar usuario de la lista
 			usuarios.remove(usuario); // Elimina el usuario del JsonArray de usuarios.
 			guardarUsuarios(); // Guarda los datos actualizados de los usuarios.
@@ -399,7 +432,8 @@ public class controlador_admin {
 	 */
 	public void guardarUsuarios() {
 		try {
-			FileWriter writer = new FileWriter("Data/usuarios.json"); // Crea un escritor de archivos para usuarios.json.
+			FileWriter writer = new FileWriter("Data/usuarios.json"); // Crea un escritor de archivos para
+																		// usuarios.json.
 			writer.write(new Gson().toJson(usuarios)); // Escribe los datos de los usuarios en formato JSON.
 			writer.close(); // Cierra el escritor de archivos.
 		} catch (IOException e) {
@@ -458,7 +492,7 @@ public class controlador_admin {
 	}
 
 //////////////////////////////EXPORTAR DATOS A CSV////////////////////////	
-	
+
 	/**
 	 * Exporta los datos de los usuarios a un archivo CSV.
 	 */
