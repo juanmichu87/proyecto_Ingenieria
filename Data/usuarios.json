@@ -1,1 +1,29 @@
-[{"id":1,"nombre":"Admin1","email":"admin1@example.com","password":"admin123","tipo":"ADMINISTRADOR","historialAsistencia":[]},{"id":2,"nombre":"Pepe","email":"pepe@uem.com","password":"Pepe123","tipo":"PROFESOR","historialAsistencia":[]},{"id":4,"nombre":"jafnj3we","email":"kkk@gmail.com","password":"Juan2","tipo":"USUARIO","historialAsistencia":[]}]
+[
+	{
+		"id": 1,
+		"nombre": "Admin1",
+		"email": "admin1@example.com",
+		"password": "admin123",
+		"tipo": "ADMINISTRADOR",
+		"historialAsistencia": [
+		]
+	},
+	{
+		"id": 2,
+		"nombre": "Pepe",
+		"email": "pepe@uem.com",
+		"password": "Pepe123",
+		"tipo": "PROFESOR",
+		"historialAsistencia": [
+		]
+	},
+	{
+		"id": 4,
+		"nombre": "jafnj3we",
+		"email": "kkk@gmail.com",
+		"password": "Juan2",
+		"tipo": "USUARIO",
+		"historialAsistencia": [
+		]
+	}
+]
